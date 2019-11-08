@@ -41,7 +41,7 @@ Gitpod对Chrome和Firefox都提供了插件支持，下载插件后，会使进�
 
 ### 2. 一键生成环境
 
-插件下载成功后，打开eosforce专门为使用web IDE开发智能合约准备的github项目[eosforce-web-ide](https://github.com/eosforce/eosforce-web-ide)，我们会发现项目的主页上多了一个Gitpod按钮
+插件下载成功后，打开eosforce专门为使用web IDE开发智能合约准备的github项目[eosforce-web-ide](https://github.com/ylic/eosforce-web-ide)，我们会发现项目的主页上多了一个Gitpod按钮
 
 ![button](images/button.png)
 
@@ -156,11 +156,11 @@ cleos get table talk '' message
 
 下面具体分析一下这个一键生成环境的过程中都发生了什么
 
-* 在任何一个github项目的地址前，加上https://gitpod.io/# ， 就可以在gitpod中打开该项目，例如在eosforce-web-ide这个项目中点击Gitpod按钮，实际访问的就是https://gitpod.io/#https://github.com/eosforce/eosforce-web-ide 这个地址
+* 在任何一个github项目的地址前，加上https://gitpod.io/# ， 就可以在gitpod中打开该项目，例如在eosforce-web-ide这个项目中点击Gitpod按钮，实际访问的就是https://gitpod.io/#https://github.com/ylic/eosforce-web-ide 这个地址
 * 打开Gitpod之后，Gitpod会根据项目中的 `.gitpod.yml` 文件来决定环境的初始化工作，该文件内容如下：
      
 ```
-image: eosforce/eosforce-web-ide:v0.1.0    # Gitpod会加载eosforce/eosforce-web-ide:v0.1.0的docker镜像，该镜像里面会部署编译好的eosforce相关程序，以及其他一些需要使用到的文件
+image: ylic/eosforce-web-ide:v0.1.0    # Gitpod会加载ylic/eosforce-web-ide:v0.1.0的docker镜像，该镜像里面会部署编译好的eosforce相关程序，以及其他一些需要使用到的文件
 
 ports:                               # 配置环境中需要打开的端口
 - port: 3000
