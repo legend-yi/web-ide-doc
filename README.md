@@ -1,4 +1,4 @@
-# eosio使用Web IDE调试智能合约
+# eosforce使用Web IDE调试智能合约
 
 ## Web IDE是什么？
 
@@ -10,7 +10,7 @@ web IDE则是将IDE里面除用户交互之外的功能全部移到了后台，�
 
 （图为一款web IDE的系统架构）
 
-目前的web IDE主要有AWS Cloud9、Cloud Studio、Eclipse Che、Gitpod等，这些web IDE各有千秋，其中Gitpod是目前web IDE中对Github上的项目支持最好的，也是eosio主推的一款产品。并且Gitpod对于非商用的开发者，每月会有100小时的免费使用时间，本文的讲解，也会以Gitpod为例（下文中提到的web IDE，在没有特指的情况下，全部为Gitpod）
+目前的web IDE主要有AWS Cloud9、Cloud Studio、Eclipse Che、Gitpod等，这些web IDE各有千秋，其中Gitpod是目前web IDE中对Github上的项目支持最好的，也是eosforce主推的一款产品。并且Gitpod对于非商用的开发者，每月会有100小时的免费使用时间，本文的讲解，也会以Gitpod为例（下文中提到的web IDE，在没有特指的情况下，全部为Gitpod）
 
 关于Gitpod，可以参考[Gitpod说明文档](https://www.gitpod.io/docs/)
 
@@ -21,11 +21,11 @@ web IDE则是将IDE里面除用户交互之外的功能全部移到了后台，�
 
 对于智能合约开发者来说，很多时候会因为初次运行，或者环境切换等原因，在这个过程中耗费很多不必要的时间成本。
 
-而Web IDE的出现，会让这些问题不再成为麻烦。拿eosio来说，想要启动一个节点，并且在节点上部署开发好的智能合约，并不是一件很简单的事，需要下载代码、安装依赖、编译代码、启动节点、编译合约、然后部署。在这个过程中，可能会出现非常多的问题，而使用web IDE，只需要一键，就可以开始开发调试智能合约，非常方便。
+而Web IDE的出现，会让这些问题不再成为麻烦。拿eosforce来说，想要启动一个节点，并且在节点上部署开发好的智能合约，并不是一件很简单的事，需要下载代码、安装依赖、编译代码、启动节点、编译合约、然后部署。在这个过程中，可能会出现非常多的问题，而使用web IDE，只需要一键，就可以开始开发调试智能合约，非常方便。
 
 ### 2. 启动节点的机器性能要求
 
-在计算机上运行一个eosio的节点，是非常耗费性能的，很多PC机可能根本没法成功运行一个eosio的节点，更不用说同时还打开IDE调试智能合约，而Web IDE将这些对机器性能的要求移到了后台，前端仅仅是一个交互页面。
+在计算机上运行一个eosforce的节点，是非常耗费性能的，很多PC机可能根本没法成功运行一个eosforce的节点，更不用说同时还打开IDE调试智能合约，而Web IDE将这些对机器性能的要求移到了后台，前端仅仅是一个交互页面。
 
 ### 3. 随处可用
 
@@ -41,7 +41,7 @@ Gitpod对Chrome和Firefox都提供了插件支持，下载插件后，会使进�
 
 ### 2. 一键生成环境
 
-插件下载成功后，打开eosio专门为使用web IDE开发智能合约准备的github项目[eosio-web-ide](https://github.com/EOSIO/eosio-web-ide)，我们会发现项目的主页上多了一个Gitpod按钮
+插件下载成功后，打开eosforce专门为使用web IDE开发智能合约准备的github项目[eosforce-web-ide](https://github.com/eosforce/eosforce-web-ide)，我们会发现项目的主页上多了一个Gitpod按钮
 
 ![button](images/button.png)
 
@@ -49,13 +49,13 @@ Gitpod对Chrome和Firefox都提供了插件支持，下载插件后，会使进�
 
 ![web-ide](images/web-ide.png)
 
-从图中可以看见，eos节点已经启动并且正在出块，同时整个编写智能合约的IDE环境已经搭建好，现在就可以使用web IDE直接开始开发智能合约了。
+从图中可以看见，eosforce已经模拟正式环境启动了23个节点并且正在出块，同时整个编写智能合约的IDE环境已经搭建好，现在就可以使用web IDE直接开始开发智能合约了。
 
 ### 3. 开发调试合约
 
 智能合约的具体开发、调试以及部署说明可以参考[eosio白皮书](https://github.com/EOSIO/Documentation/blob/master/TechnicalWhitePaper.md)，本文仅分析该项目模板合约的部署和调用
 
-* 在web IDE中打开`contract/talk.cpp`文件，核心逻辑如下：
+* 在web IDE中打开`contract/talk/talk.cpp`文件，核心逻辑如下：
 ```
 [[eosio::action]] void post(uint64_t id, uint64_t reply_to, eosio::name user, const std::string& content) {
         message_table table{get_self(), 0};
@@ -90,19 +90,31 @@ Gitpod对Chrome和Firefox都提供了插件支持，下载插件后，会使进�
 
 * 在该窗口执行如下命令，编译talk.cpp文件，会生成`talk.abi`和`talk.wasm`两个文件
 ```
-eosio-cpp contract/talk.cpp
+eosforce-cpp contract/talk/talk.cpp
 ```
-* 然后执行以下命令，创建合约账户并部署合约
+* 然后执行以下命令，创建合约账户talk，并向该合约账户转帐10000EOS(此次转账主要是该账户随后需要set code和set abi)
 ```
-cleos create account eosio talk EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+cleos create account eosforce talk EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+cleos transfer eosforce talk '10000.0000 EOS'
+```
+* 通过执行系统合约为talk账户租一定的内存(此处需要多租一点，因为set code操作需要的内存很多)，然后将编译后的wasm和abi文件绑定到talk合约账户
+```
+cleos push action eosio vote4ram  '[talk, biosbpa, "2000.0000 EOS"]' -p talk
 cleos set code talk talk.wasm
 cleos set abi talk talk.abi
 ```
-* 随后创建两个普通账户用来执行合约
+* 随后创建两个普通账户bob和alice，并向他们每人转帐100 EOS(因为后续执行合约需要扣除fee)，用来执行合约
 ```
-cleos create account eosio bob EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
-cleos create account eosio jane EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+cleos create account eosforce bob EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+cleos create account eosforce jane EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+cleos transfer  eosforce bob '100 EOS'
+cleos transfer  eosforce jane '100 EOS'
 ```
+* 为talk合约账户的post方法设置fee，此处是其他账户执行该方法时需要支付的fee
+```
+cleos set setfee talk post '1.0000 EOS'
+```
+
 * 执行合约，以下三个命令分别是
    * bob以1000为id，发布一条"This is a new post"消息到table，并且不需要回复
    * jane以2000为id，发布一条"This is my first post"消息到table，并且不需要回复
@@ -144,11 +156,11 @@ cleos get table talk '' message
 
 下面具体分析一下这个一键生成环境的过程中都发生了什么
 
-* 在任何一个github项目的地址前，加上https://gitpod.io/# ， 就可以在gitpod中打开该项目，例如在eosio-web-ide这个项目中点击Gitpod按钮，实际访问的就是https://gitpod.io/#https://github.com/EOSIO/eosio-web-ide 这个地址
+* 在任何一个github项目的地址前，加上https://gitpod.io/# ， 就可以在gitpod中打开该项目，例如在eosforce-web-ide这个项目中点击Gitpod按钮，实际访问的就是https://gitpod.io/#https://github.com/eosforce/eosforce-web-ide 这个地址
 * 打开Gitpod之后，Gitpod会根据项目中的 `.gitpod.yml` 文件来决定环境的初始化工作，该文件内容如下：
      
 ```
-image: eosio/eosio-web-ide:v0.1.0    # Gitpod会加载eosio/eosio-web-ide:v0.1.0的docker镜像，该镜像里面会部署编译好的eos相关程序，以及其他一些需要使用到的文件
+image: eosforce/eosforce-web-ide:v0.1.0    # Gitpod会加载eosforce/eosforce-web-ide:v0.1.0的docker镜像，该镜像里面会部署编译好的eosforce相关程序，以及其他一些需要使用到的文件
 
 ports:                               # 配置环境中需要打开的端口
 - port: 3000
@@ -161,16 +173,18 @@ ports:                               # 配置环境中需要打开的端口
   onOpen: ignore
 - port: 9876
   onOpen: ignore
+  ...    #此处省略了部分端口
 
 tasks:                        # 初始化阶段的任务
+
 - before: cd webapp
-  init: yarn               # yarn会根据package.json文件去下载相关依赖包
-  command: nginx -c $PWD/nginx.conf; npx webpack-dev-server      # 启动nginx反向代理
-- before: cleos wallet unlock --password </password                              # 启动并解锁钱包
-  command: nodeos --config-dir ~/eosio/chain/config --data-dir ~/eosio/chain/data -e -p eosio --plugin eosio::chain_api_plugin --contracts-console      # 启动nodeos
+  init: yarn　　　　# yarn会根据package.json文件去下载相关依赖包
+  command: nginx -c $PWD/nginx.conf; npx webpack-dev-server     # 启动nginx反向代理
+- before: cd /workspace/eosforce-web-ide
+  command: ./nodeoscmd     # 启动nodeos
   ```
 
-* 以上步骤结束后，一个完整的eos单节点环境就运行起来了，然后IDE会加载当前项目，开发人员就可以通过浏览器开发调试智能合约了
+* 以上步骤结束后，一个完整的eosforce测试环境就运行起来了，然后IDE会加载当前项目，开发人员就可以通过浏览器开发调试智能合约了
 
 ## 总结
 
